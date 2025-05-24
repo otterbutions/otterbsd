@@ -23,7 +23,7 @@ echo
 echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :3"
 read DRM
 
-pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264
+pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio
 
 echo "permit :wheel" > /usr/local/etc/doas.conf
 sysrc kld_list+=$DRM
