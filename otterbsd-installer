@@ -10,7 +10,7 @@ echo
 echo "1. Lets ask you a few questions first :3"
 
 adduser
-USER=${users}
+USER="$(users)"
 
 echo
 echo "2. Choose your favorite color out fo these :3 (in lower case)"
