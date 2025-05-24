@@ -1,0 +1,39 @@
+#!/bin/sh
+
+pkg install -y fish > /dev/null
+
+echo
+echo
+echo "Welcome to the otterBSD transition installer :3"
+echo "WARNING: It is recommended to do this in a fresh install of freeBSD with only git installed without a user as this will do it for you :3"
+echo
+echo "1. Lets ask you a few questions first :3"
+
+adduser
+USER=${users}
+
+echo
+echo "2. Choose your favorite color out fo these :3 (in lower case)"
+echo "red, orange, yellow, green, teal, magenta, violet"
+read COLOR
+
+echo
+echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :3"
+read $DRM
+
+pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes-extra dmenu noto qt5-style-plugin flat-remix-icon-themes mpv
+
+echo "permit :wheel" > /usr/local/etc/doas.conf
+sysrc kld_list+=$DRM
+
+git clone https://github.com/otterbutions/otterBSD
+cd otterBSD && tar -xvf otterBSD/otterwm.txz > /dev/null
+cd dwm && make clean install
+cd otterBSD/st && make clean install
+cd otterBSD/slstatus && make clean install
+cp -r otterBSD/config/.xinitrc /home/$USER/.xinitrc
+cp -rf otterBSD/config/.config /home/$USER
+chown $USER:$USER /home/$USER/.xinitrc
+chown -R $USER:$USER /home/$USER/.config
+
+ln /home/$USER/.config/otterwm/colors/$COLOR /home/$USER/.config/otterwm/wallpaper
