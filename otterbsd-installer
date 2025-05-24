@@ -1,5 +1,7 @@
 #!/bin/sh
 
+pwd="$(pwd)"
+
 pkg install -y fish > /dev/null
 
 echo
@@ -9,8 +11,8 @@ echo "WARNING: It is recommended to do this in a fresh install of freeBSD with o
 echo
 echo "1. Lets ask you a few questions first :3"
 
-adduser
-USER="$(users)"
+adduser -G wheel\ video -s fish
+USER="$(ls /home)"
 
 echo
 echo "2. Choose your favorite color out fo these :3 (in lower case)"
@@ -19,20 +21,19 @@ read COLOR
 
 echo
 echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :3"
-read $DRM
+read DRM
 
-pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes-extra dmenu noto qt5-style-plugin flat-remix-icon-themes mpv
+pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch
 
 echo "permit :wheel" > /usr/local/etc/doas.conf
 sysrc kld_list+=$DRM
 
-git clone https://github.com/otterbutions/otterBSD
-cd otterBSD && tar -xvf otterBSD/otterwm.txz > /dev/null
-cd dwm && make clean install
-cd otterBSD/st && make clean install
-cd otterBSD/slstatus && make clean install
-cp -r otterBSD/config/.xinitrc /home/$USER/.xinitrc
-cp -rf otterBSD/config/.config /home/$USER
+tar -xvf $pwd/otterwm.txz > /dev/null
+cd $pwd/dwm && make clean install
+cd $pwd/st && make clean install
+cd $pwd/slstatus && make clean install
+cp -r $pwd/config/.xinitrc /home/$USER/.xinitrc
+cp -rf $pwd/config/.config /home/$USER/.config
 chown $USER:$USER /home/$USER/.xinitrc
 chown -R $USER:$USER /home/$USER/.config
 
