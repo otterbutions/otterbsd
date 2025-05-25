@@ -7,4 +7,4 @@ What drm-kmod module to load, and that's pretty much it.
 
 This does not require any gnome-theme engines besides the default, it doesn't install lxappearance or any of the sort, system will be in japanese and ibus will allow you to choose from US, JA and mozc layouts
 
-For screenshots: https://github/otterbutions/otterbsd-screenshots
+For screenshots: https://github.com/otterbutions/otterbsd-screenshots
