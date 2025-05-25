@@ -15,7 +15,7 @@ adduser -G wheel\ video -s fish
 USER="$(ls /home)"
 
 echo
-echo "2. Choose your favorite color out fo these :3 (in lower case)"
+echo "2. Choose your favorite color out of these :3 (in lower case)"
 echo "red, orange, yellow, green, teal, magenta, violet"
 read COLOR
 
@@ -23,15 +23,17 @@ echo
 echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :3"
 read DRM
 
-pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio
+echo "4. Installing Packages"
+pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio > /dev/null
+
+echo "5. Configuring Packages"
 
 echo "permit :wheel" > /usr/local/etc/doas.conf
 sysrc kld_list+=$DRM
 
 tar -xvf $pwd/otterwm.txz > /dev/null
-cd $pwd/dwm && make clean install
-cd $pwd/st && make clean install
-cd $pwd/slstatus && make clean install
+cd $pwd/st && make clean install > /dev/null
+cd $pwd/slstatus && make clean install > /dev/null
 cp -r $pwd/config/.xinitrc /home/$USER/.xinitrc
 cp -rf $pwd/config/.config /home/$USER/.config
 cp -rf $pwd/config/.themes /home/$USER/themes.
@@ -40,4 +42,4 @@ chown $USER:$USER /home/$USER/.xinitrc
 chown -R $USER:$USER /home/$USER/.config
 chown -R $USER:$USER /home/$USER/.themes
 
-ln /home/$USER/.config/otterwm/colors/$COLOR /home/$USER/.config/otterwm/wallpaper
+/home/$USER/.config/otterwm/change-color $COLOR $USER > /dev/null
