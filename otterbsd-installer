@@ -31,7 +31,7 @@ echo "5. Configuring Packages"
 echo "permit :wheel" > /usr/local/etc/doas.conf
 sysrc kld_list+=$DRM
 
-tar -xvf $pwd/otterwm.txz > /dev/null
+tar -xvf $pwd/otterbsd.txz > /dev/null
 cd $pwd/st && make clean install > /dev/null
 cd $pwd/slstatus && make clean install > /dev/null
 cp -r $pwd/config/.xinitrc /home/$USER/.xinitrc
