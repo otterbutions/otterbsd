@@ -24,7 +24,7 @@ echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :
 read DRM
 
 echo "4. Installing Packages"
-pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance gnome-themes dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio > /dev/null
+pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf lxappearance dmenu noto qt5-style-plugins flat-remix-icon-themes mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio > /dev/null
 
 echo "5. Configuring Packages"
 
@@ -36,7 +36,7 @@ cd $pwd/st && make clean install > /dev/null
 cd $pwd/slstatus && make clean install > /dev/null
 cp -r $pwd/config/.xinitrc /home/$USER/.xinitrc
 cp -rf $pwd/config/.config /home/$USER/.config
-cp -rf $pwd/config/.themes /home/$USER/themes.
+cp -rf $pwd/config/.themes /home/$USER/.themes
 cp -rf $pwd/bin/screenshot /usr/local/bin/screenshot
 chown $USER:$USER /home/$USER/.xinitrc
 chown -R $USER:$USER /home/$USER/.config
