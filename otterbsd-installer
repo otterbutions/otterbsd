@@ -14,7 +14,7 @@ echo "1. Lets ask you a few questions first :3"
 adduser -G wheel\ video -s fish
 echo
 echo "What user do you want to use otterwm on?"
-READ USER
+read USER
 
 echo
 echo "2. Choose your favorite color out of these :3 (in lower case)"
