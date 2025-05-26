@@ -1,5 +1,6 @@
-![Icon](https://github.com/otterbutions/otterbsd-screenshots/blob/main/otterBSD-cover.png?raw=true)
-
+<p align="center">
+  <img src="https://github.com/otterbutions/otterbsd-screenshots/blob/main/otterBSD-cover.png?raw=true"/>
+</p>
 
 This is a post-installer script, it works on FreeBSD 14.2-RELEASE (atleast for me)
 
