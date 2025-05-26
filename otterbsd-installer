@@ -12,7 +12,9 @@ echo
 echo "1. Lets ask you a few questions first :3"
 
 adduser -G wheel\ video -s fish
-USER=test
+echo
+echo "What user do you want to install otterwm on?"
+READ USER
 
 echo
 echo "2. Choose your favorite color out of these :3 (in lower case)"
@@ -24,7 +26,7 @@ echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :
 read DRM
 
 echo "4. Installing Packages"
-pkg install -y xorg drm-kmod feh nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio mesa-libs > /dev/null
+pkg install -y xorg drm-kmod nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio mesa-libs > /dev/null
 
 echo "5. Configuring Packages"
 
