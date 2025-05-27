@@ -56,11 +56,12 @@ while [ "$OTTERWM_USER" != 'exit' ]; do
 			cp -rf $pwd/config/.config /home/$OTTERWM_USER/.config
 			cp -rf $pwd/config/.themes /home/$OTTERWM_USER/.themes
 			cp -rf $pwd/bin/screenshot /usr/local/bin/screenshot
+			/home/$OTTERWM_USER/.config/otterwm/change-color violet $OTTERWM_USER 2> /dev/null
 			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.xinitrc
 			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.gtkrc-2.0
 			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.config
 			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.themes
-			/home/$OTTERWM_USER/.config/otterwm/change-color violet $OTTERWM_USER 2> /dev/null
+			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.icons
 		fi
 done
 
