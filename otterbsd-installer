@@ -10,6 +10,9 @@ printf "What shell do you want to use? [fish]\n"
 read -p "> " WANTED_SHELL
 WANTED_SHELL="${WANTED_SHELL:-fish}"
 
+# adduser will complain if not installed first and then default to tcsh
+pkg install -y $WANTED_SHELL
+
 printf "What text editor do you want to install? [neovim]\n"
 read -p "> " EDITOR
 EDITOR="${EDITOR:-neovim}"
@@ -33,7 +36,7 @@ SU="${SU:-doas}"
 printf "\nIf you want the user to be able to root through doas or sudo, add user to wheel.\nIf you want the use to be able to run otterWM, add user to video\n\n"
 adduser -s $WANTED_SHELL
 
-pkg install -y $WANTED_SHELL $EDITOR $DRM_KMOD $SU xorg nsxiv firefox htop pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar pulseaudio mesa-libs
+pkg install -y $EDITOR $DRM_KMOD $SU xorg nsxiv firefox htop pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar pulseaudio mesa-libs
 echo "permit :wheel" > /usr/local/etc/doas.conf
 sysrc kld_list+=$DRIVER
 
