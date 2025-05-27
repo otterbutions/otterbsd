@@ -1,49 +1,60 @@
 #!/bin/sh
 
+printf "\nWelcome to the OtterBSD Installer\nThis script will ask you to make a user\nWhat shell you want to install and use by default, packages you want to install etc, and questions to do wih OtterWM\n\n"
+
 pwd="$(pwd)"
 
-pkg install -y fish > /dev/null
+printf "Make sure the packages you want is the same name as in the repos!\nIf it's not the default option, it might not be configured properly, will check if made into a git issue\n"
 
-echo
-echo
-echo "Welcome to the otterBSD transition installer :3"
-echo "WARNING: It is recommended to do this in a fresh install of freeBSD with only git installed without a user as this will do it for you :3"
-echo
-echo "1. Lets ask you a few questions first :3"
+printf "What shell do you want to use? [fish]\n"
+read -p "> " WANTED_SHELL
+WANTED_SHELL="${WANTED_SHELL:-fish}"
 
-adduser -G wheel\ video -s fish
-echo
-echo "What user do you want to use otterwm on?"
-read USER
+printf "What text editor do you want to install? [neovim]\n"
+read -p "> " EDITOR
+EDITOR="${EDITOR:-neovim}"
 
-echo
-echo "2. Choose your favorite color out of these :3 (in lower case)"
-echo "red, orange, yellow, green, teal, magenta, violet"
-read COLOR
+printf "\nWhat drm_kmod module do you want to load?\n - intel: i915kms\n - AMD: amdgpu\n - nvidia: nvidia\n"
+while [ "$DRIVER" = '' ]; do
+		read -p "> " DRIVER
+done
 
-echo
-echo "3. What drm_kmod driver (ex: i915kms, amdgpu, nvidia) do you want to use :3"
-read DRM
+# Need to move this into configuration
+if [ "$DRIVER" = 'nvidia' ]; then
+		DRM_KMOD=nvidia-drm-kmod
+else
+		DRM_KMOD=drm-kmod
+fi
 
-echo "4. Installing Packages"
-pkg install -y xorg drm-kmod nsxiv neovim firefox htop doas pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar x264 pulseaudio mesa-libs > /dev/null
+printf "Do you want to use sudo or doas? [doas]\n"
+read -p "> " SU
+SU="${SU:-doas}"
 
-echo "5. Configuring Packages"
+printf "\nIf you want the user to be able to root through doas or sudo, add user to wheel.\nIf you want the use to be able to run otterWM, add user to video\n\n"
+adduser -s $WANTED_SHELL
 
+pkg install -y $WANTED_SHELL $EDITOR $DRM_KMOD $SU xorg nsxiv firefox htop pcmanfm ibus ja-ibus-mozc qt5ct mpv cmus pkgconf dmenu noto qt5-style-plugins papirus-icon-theme mpv fastfetch mixertui scrot zip unzip unrar rar pulseaudio mesa-libs
 echo "permit :wheel" > /usr/local/etc/doas.conf
-sysrc kld_list+=$DRM
+sysrc kld_list+=$DRIVER
 
 tar -xf $pwd/otterbsd.txz
 cd $pwd/st && make clean install
 cd $pwd/slstatus && make clean install
-cp -r $pwd/config/.xinitrc /home/$USER/.xinitrc
-cp -r $pwd/config/.gtkrc-2.0 /home/$USER/.gtkrc-2.0
-cp -rf $pwd/config/.config /home/$USER/.config
-cp -rf $pwd/config/.themes /home/$USER/.themes
-cp -rf $pwd/bin/screenshot /usr/local/bin/screenshot
-chown $USER:$USER /home/$USER/.xinitrc
-chown $USER:$USER /home/$USER/.gtkrc-2.0
-chown -R $USER:$USER /home/$USER/.config
-chown -R $USER:$USER /home/$USER/.themes
 
-/home/$USER/.config/otterwm/change-color $COLOR $USER > /dev/null
+while [ "$OTTERWM_USER" != 'exit' ]; do
+		printf "\nWhat user do you want to install otterWM on?\nEnter \'exit\' if you don't want to install it to anyone else.\n"
+		read -p "> " OTTERWM_USER
+
+		if [ "$OTTERWM_USER" != '' ]; then
+			cp -rv $pwd/config/.xinitrc /home/$OTTERWM_USER/.xinitrc
+			cp -rv $pwd/config/.gtkrc-2.0 /home/$OTTERWM_USER/.gtkrc-2.0
+			cp -rvf $pwd/config/.config /home/$OTTERWM_USER/.config
+			cp -rvf $pwd/config/.themes /home/$OTTERWM_USER/.themes
+			cp -rvf $pwd/bin/screenshot /usr/local/bin/screenshot
+			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.xinitrc
+			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.gtkrc-2.0
+			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.config
+			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.themes
+			/home/$OTTERWM_USER/.config/otterwm/change-color violet $OTTERWM_USER
+		fi
+done
