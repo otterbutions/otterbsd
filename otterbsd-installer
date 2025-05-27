@@ -17,6 +17,8 @@ printf "What text editor do you want to install? [neovim]\n"
 read -p "> " EDITOR
 EDITOR="${EDITOR:-neovim}"
 
+
+
 printf "\nWhat drm_kmod module do you want to load?\n - intel: i915kms\n - AMD: amdgpu\n - nvidia: nvidia\n"
 while [ "$DRIVER" = '' ]; do
 		read -p "> " DRIVER
@@ -48,16 +50,19 @@ while [ "$OTTERWM_USER" != 'exit' ]; do
 		printf "\nWhat user do you want to install otterWM on?\nEnter \'exit\' if you don't want to install it to anyone else.\n"
 		read -p "> " OTTERWM_USER
 
-		if [ "$OTTERWM_USER" != '' ]; then
+		if [ "$OTTERWM_USER" != 'exit' ]; then
 			cp -rv $pwd/config/.xinitrc /home/$OTTERWM_USER/.xinitrc
 			cp -rv $pwd/config/.gtkrc-2.0 /home/$OTTERWM_USER/.gtkrc-2.0
-			cp -rvf $pwd/config/.config /home/$OTTERWM_USER/.config
-			cp -rvf $pwd/config/.themes /home/$OTTERWM_USER/.themes
-			cp -rvf $pwd/bin/screenshot /usr/local/bin/screenshot
+			cp -rf $pwd/config/.config /home/$OTTERWM_USER/.config
+			cp -rf $pwd/config/.themes /home/$OTTERWM_USER/.themes
+			cp -rf $pwd/bin/screenshot /usr/local/bin/screenshot
 			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.xinitrc
 			chown $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.gtkrc-2.0
 			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.config
 			chown -R $OTTERWM_USER:$OTTERWM_USER /home/$OTTERWM_USER/.themes
-			/home/$OTTERWM_USER/.config/otterwm/change-color violet $OTTERWM_USER
+			/home/$OTTERWM_USER/.config/otterwm/change-color violet $OTTERWM_USER 2> /dev/null
 		fi
 done
+
+printf "Cleaning up..."
+rm -rf $pwd/st $pwd/slstatus $pwd/config $pwd/bin
