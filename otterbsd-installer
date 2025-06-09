@@ -45,6 +45,7 @@ sysrc kld_list+=$DRIVER
 tar -xf $pwd/otterbsd.txz
 cd $pwd/st && make clean install
 cd $pwd/slstatus && make clean install
+cd $pwd/dmenu && make clean install
 
 while [ "$OTTERWM_USER" != 'exit' ]; do
 		printf "\nWhat user do you want to install otterWM on?\nEnter \'exit\' if you don't want to install it to anyone else.\n"
