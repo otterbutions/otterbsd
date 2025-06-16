@@ -2,7 +2,7 @@
   <img src="https://github.com/otterbutions/otterbsd-screenshots/blob/main/otterBSD-cover.png?raw=true"/>
 </p>
 
-This is a post-installer script, it works on FreeBSD 14.2-RELEASE (atleast for me)
+This is a post-installer script, it works on FreeBSD 14.2-RELEASE, FreeBSD 14.3-RELEASE (atleast for me)
 
 Don't make a user, this will do it for you, the only thing you need to do is connect to a network and install git.
 
